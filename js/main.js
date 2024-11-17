@@ -5,19 +5,32 @@
   
   let q1 = ['r','e','d'];
   let q2 = ['p','i','n','k'];
-  
+  let question;
+
   body.addEventListener('click',()=>{
-    let question = q1.join(' ');
+    question = q1.join(' ');
     h1.textContent = question;
-    document.addEventListener('keydown',(e)=>{
-      for( let i = 0; i < q1.length; i++){
-        while(q1[i]===e.key){
-          q1[i]='_';
+  });
+
+  document.addEventListener('keydown',(e)=>{
+    while(q1[0]===e.key){
+      q1[0] = '_';
+      question = q1.join(' ');
+      h1.textContent = question;
+      document.addEventListener('keydown',(e)=>{
+        while(q1[1]===e.key){
+          q1[1] = '_';
           question = q1.join(' ');
           h1.textContent = question;
+          document.addEventListener('keydown',(e)=>{
+            while(q1[2]===e.key){
+              q1[2] = '_';
+              question = q1.join(' ');
+              h1.textContent = question;
+            }
+          })
         }
-        console.log(q1);
-      }
-    })
-  });
+      })
+    }
+  })
 }

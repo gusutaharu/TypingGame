@@ -2,17 +2,19 @@
 
 {
   const word = 'red';
-  let log = 0;
+  let loc = 0;
 
   const target = document.getElementById('target');
   target.textContent = word;
 
   document.addEventListener('keydown', e => {
-    if (e.key === word[loc]) {
-      loc++;
-      // 1:_ed
-      // 2:__d
-      // 3:___
+    if(e.key !== word[loc]){
+      return;
     }
+    loc++;
+    // 1:_ed
+    // 2:__d
+    // 3:___
+    target.textContent = '_'.repeat(loc) + word.substring(loc);
   });
 }

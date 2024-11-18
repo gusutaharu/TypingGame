@@ -1,36 +1,45 @@
-'use strict'
+'use strict';
 {
-  const body = document.querySelector('body');
-  const h1 = document.querySelector('h1');
-  
-  let q1 = ['r','e','d'];
-  let q2 = ['p','i','n','k'];
-  let question;
+  const target = document.getElementById('target');
+  const result = document.getElementById('result');
+  const words = [
+    'red',
+    'blue',
+    'pink',
+  ];
+  let loc = 0;
+  let word;
+  let startTime;
+  let isPlaying = false;
 
-  body.addEventListener('click',()=>{
-    question = q1.join(' ');
-    h1.textContent = question;
-  });
+  function setWord(){
+    word = words.splice(Math.floor(Math.random() * words.length),1)[0];
+    loc = 0;
+    target.textContent = word;
+  };
 
-  document.addEventListener('keydown',(e)=>{
-    while(q1[0]===e.key){
-      q1[0] = '_';
-      question = q1.join(' ');
-      h1.textContent = question;
-      document.addEventListener('keydown',(e)=>{
-        while(q1[1]===e.key){
-          q1[1] = '_';
-          question = q1.join(' ');
-          h1.textContent = question;
-          document.addEventListener('keydown',(e)=>{
-            while(q1[2]===e.key){
-              q1[2] = '_';
-              question = q1.join(' ');
-              h1.textContent = question;
-            }
-          })
-        }
-      })
+  document.addEventListener('click',()=>{
+    if (isPlaying === true){
+      return;
     }
-  })
+    isPlaying = true;
+    startTime = Date.now();
+    setWord();
+  });
+  
+  document.addEventListener('keydown',e=>{
+    if(word[loc] !== e.key){
+      return;
+    }
+    loc++;
+    target.textContent = '_'.repeat(loc) + word.substring(loc);
+    if(loc === word.length){
+      if( words.length === 0){
+        let endTime = ((Date.now() - startTime) / 1000).toFixed(2);
+        result.textContent = `Finished ${endTime}`;
+        return;
+      }
+      setWord();
+    }
+  });
 }
